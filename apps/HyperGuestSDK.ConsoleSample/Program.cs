@@ -12,8 +12,11 @@ var settings = GetSettings();
 var http = CreateHttpClient();
 var api = new HyperGuestApiClient(http, settings);
 
-var properties = await api.Properties.GetPropertiesAsync();
-Console.WriteLine($"Found {properties.Data.Length} properties.");	
+//var properties = await api.Properties.GetPropertiesAsync();
+//Console.WriteLine($"Found {properties.Data.Length} properties.");
+
+var property = await api.Properties.GetPropertyDetailsAsync(19912);
+Console.WriteLine($"Property: {property.Data.Name}");	
 
 HyperGuestSettings GetSettings()
 {

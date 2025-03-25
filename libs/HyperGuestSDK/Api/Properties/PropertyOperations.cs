@@ -24,6 +24,10 @@ partial class  HyperGuestApiClient
 public partial interface IPropertyOperations
 {
 	Task<HyperGuestResponse<Property[]>> GetPropertiesAsync(CancellationToken cancellationToken = default);
+
+	Task<HyperGuestResponse<PropertyDetail>> GetPropertyDetailsAsync(
+		int hotelId,
+		CancellationToken cancellationToken = default);
 }
 
 public partial class PropertyOperations(ApiClient client) : IPropertyOperations
@@ -34,5 +38,15 @@ public partial class PropertyOperations(ApiClient client) : IPropertyOperations
 		var request = new HyperGuestRequest(HttpMethod.Get, path);
 
 		return await client.FetchAsync<Property[]>(request, cancellationToken);
+	}
+
+	public async Task<HyperGuestResponse<PropertyDetail>> GetPropertyDetailsAsync(
+		int hotelId,
+		CancellationToken cancellationToken = default)
+	{
+		var path = new PathString($"/{hotelId}/property-static.json");
+		var request = new HyperGuestRequest(HttpMethod.Get, path);
+
+		return await client.FetchAsync<PropertyDetail>(request, cancellationToken);
 	}
 }

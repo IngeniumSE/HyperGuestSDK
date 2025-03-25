@@ -17,9 +17,9 @@ end_of_line = crlf
 dotnet_style_coalesce_expression = true:suggestion
 dotnet_style_null_propagation = true:suggestion
 dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
-dotnet_style_prefer_auto_properties = true:suggestion
+dotnet_style_prefer_auto_properties = true:silent
 dotnet_style_object_initializer = true:suggestion
-dotnet_style_prefer_collection_expression = true:suggestion
+dotnet_style_prefer_collection_expression = when_types_loosely_match:suggestion
 dotnet_style_collection_initializer = true:suggestion
 dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
 dotnet_style_prefer_conditional_expression_over_assignment = true:silent
@@ -69,7 +69,7 @@ csharp_indent_braces = false
 csharp_indent_case_contents = true
 csharp_indent_case_contents_when_block = true
 csharp_indent_switch_labels = true
-csharp_indent_labels = one_less_than_current
+csharp_indent_labels = flush_left
 
 # Modifier preferences
 csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async:suggestion
@@ -115,13 +115,13 @@ dotnet_naming_style.camel_case_underscore_style.required_prefix = _
 dotnet_naming_style.camel_case_underscore_style.capitalization = camel_case
 
 # Code style defaults
-csharp_using_directive_placement = outside_namespace:suggestion
+csharp_using_directive_placement = inside_namespace:silent
 dotnet_sort_system_directives_first = true
 csharp_prefer_braces = true:silent
 csharp_preserve_single_line_blocks = true:none
 csharp_preserve_single_line_statements = false:none
 csharp_prefer_static_local_function = true:suggestion
-csharp_prefer_simple_using_statement = false:none
+csharp_prefer_simple_using_statement = true:suggestion
 csharp_style_prefer_switch_expression = true:suggestion
 dotnet_style_readonly_field = true:suggestion
 
@@ -140,9 +140,9 @@ dotnet_style_prefer_conditional_expression_over_return = true:silent
 csharp_prefer_simple_default_expression = true:suggestion
 
 # Expression-bodied members
-csharp_style_expression_bodied_methods = true:silent
-csharp_style_expression_bodied_constructors = true:silent
-csharp_style_expression_bodied_operators = true:silent
+csharp_style_expression_bodied_methods = false:silent
+csharp_style_expression_bodied_constructors = false:silent
+csharp_style_expression_bodied_operators = false:silent
 csharp_style_expression_bodied_properties = true:silent
 csharp_style_expression_bodied_indexers = true:silent
 csharp_style_expression_bodied_accessors = true:silent
@@ -155,12 +155,12 @@ csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
 csharp_style_inlined_variable_declaration = true:suggestion
 
 # Null checking preferences
-csharp_style_throw_expression = true:suggestion
+csharp_style_throw_expression = false:suggestion
 csharp_style_conditional_delegate_call = true:suggestion
 
 # Other features
-csharp_style_prefer_index_operator = false:none
-csharp_style_prefer_range_operator = false:none
+csharp_style_prefer_index_operator = true:suggestion
+csharp_style_prefer_range_operator = true:suggestion
 csharp_style_pattern_local_over_anonymous_function = false:none
 
 # Space preferences
@@ -189,7 +189,7 @@ csharp_space_between_square_brackets = false
 
 # License header
 file_header_template = This work is licensed under the terms of the MIT license.\nFor a copy, see <https://opensource.org/licenses/MIT>.
-csharp_style_namespace_declarations = file_scoped:silent
+csharp_style_namespace_declarations = file_scoped:warning
 csharp_style_prefer_method_group_conversion = true:silent
 csharp_style_prefer_top_level_statements = true:silent
 csharp_style_prefer_primary_constructors = true:suggestion
@@ -211,6 +211,7 @@ csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimenta
 csharp_style_prefer_pattern_matching = true:silent
 csharp_style_prefer_not_pattern = true:suggestion
 csharp_style_prefer_extended_property_pattern = true:suggestion
+csharp_prefer_system_threading_lock = true:suggestion
 
 # C++ Files
 [*.{cpp,h,in}]
