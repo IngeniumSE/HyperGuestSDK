@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 using HyperGuestSDK;
 using HyperGuestSDK.Api;
+using System.Text.Json;
 
 var settings = GetSettings();
 var http = CreateHttpClient();
@@ -16,6 +17,8 @@ var api = new HyperGuestApiClient(http, settings);
 //Console.WriteLine($"Found {properties.Data.Length} properties.");
 
 var property = await api.Properties.GetPropertyDetailsAsync(19912);
+
+var json = JsonSerializer.Serialize(property.Data);
 Console.WriteLine($"Property: {property.Data.Name}");	
 
 HyperGuestSettings GetSettings()

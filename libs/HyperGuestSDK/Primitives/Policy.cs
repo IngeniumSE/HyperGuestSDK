@@ -241,7 +241,32 @@ public class PolicyConditionJsonConverter : JsonConverter<PolicyCondition[]?>
 	}
 
 	public override void Write(Utf8JsonWriter writer, PolicyCondition[]? value, JsonSerializerOptions options)
-		=> throw new NotSupportedException();
+	{
+		if (value is { Length: > 0 })
+		{
+			writer.WriteStartArray();
+
+			for (int i = 0; i < value.Length; i++)
+			{
+				var item = value[i];
+				if (value is null)
+				{
+					writer.WriteNullValue();
+				}
+				else
+				{
+					JsonSerializer.Serialize(writer, item, options);
+				}
+			}
+
+			writer.WriteEndArray();
+
+		}
+		else
+		{
+			writer.WriteNullValue();
+		}
+	}
 }
 
 public class PolicyResultJsonConverter : JsonConverter<PolicyResult[]?>
@@ -265,5 +290,30 @@ public class PolicyResultJsonConverter : JsonConverter<PolicyResult[]?>
 	}
 
 	public override void Write(Utf8JsonWriter writer, PolicyResult[]? value, JsonSerializerOptions options)
-		=> throw new NotSupportedException();
+	{
+		if (value is { Length: > 0 })
+		{
+			writer.WriteStartArray();
+
+			for (int i = 0; i < value.Length; i++)
+			{
+				var item = value[i];
+				if (value is null)
+				{
+					writer.WriteNullValue();
+				}
+				else
+				{
+					JsonSerializer.Serialize(writer, item, options);
+				}
+			}
+
+			writer.WriteEndArray();
+			
+		}
+		else
+		{
+			writer.WriteNullValue();
+		}
+	}
 }

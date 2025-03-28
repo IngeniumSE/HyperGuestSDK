@@ -23,5 +23,14 @@ public class TimeSpanJsonConverter() : JsonConverter<TimeSpan?>
 	}
 
 	public override void Write(Utf8JsonWriter writer, TimeSpan? value, JsonSerializerOptions options)
-		=> throw new NotSupportedException();
+	{
+		if (value.HasValue)
+		{
+			writer.WriteStringValue(value.Value.ToString(_format));
+		}
+		else
+		{
+			writer.WriteNullValue();
+		}
+	}
 }

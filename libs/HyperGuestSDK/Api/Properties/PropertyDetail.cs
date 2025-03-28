@@ -104,6 +104,12 @@ public class PropertyDetail : Model<PropertyDetail>
 	public string Name { get; set; } = default!;
 
 	/// <summary>
+	/// Gets or sets the set of rate plans.
+	/// </summary>
+	[JsonPropertyName("ratePlans")]
+	public RatePlan?[]? RatePlans { get; set; }
+
+	/// <summary>
 	/// Gets or sets the rooms.
 	/// </summary>
 	[JsonPropertyName("rooms")]

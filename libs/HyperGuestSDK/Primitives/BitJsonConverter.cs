@@ -16,5 +16,7 @@ public class BitJsonConverter() : JsonConverter<bool>
 	}
 
 	public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
-		=> throw new NotSupportedException();
+	{
+		writer.WriteNumberValue(value ? 1 : 0);
+	}
 }

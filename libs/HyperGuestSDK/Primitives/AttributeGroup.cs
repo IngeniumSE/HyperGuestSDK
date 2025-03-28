@@ -96,5 +96,27 @@ public class AttributeItemsTypeConverter : JsonConverter<AttributeItems>
 	}
 
 	public override void Write(Utf8JsonWriter writer, AttributeItems value, JsonSerializerOptions options)
-		=> throw new NotSupportedException();
+	{
+		if (value.IsMap)
+		{
+			writer.WriteStartArray();
+			foreach (var item in value.EnumerateMap())
+			{
+				writer.WriteStartObject();
+				writer.WriteString("key", item.Key);
+				writer.WriteString("value", item.Value);
+				writer.WriteEndObject();
+			}
+			writer.WriteEndArray();
+		}
+		else
+		{
+			writer.WriteStartArray();
+			foreach (var item in value.Enumerate())
+			{
+				writer.WriteStringValue(item);
+			}
+			writer.WriteEndArray();
+		}
+	}
 }

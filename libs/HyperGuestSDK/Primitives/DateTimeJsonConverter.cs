@@ -23,5 +23,7 @@ public class DateTimeJsonConverter() : JsonConverter<DateTime?>
 	}
 
 	public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
-		=> throw new NotSupportedException();
+	{
+		writer.WriteStringValue(value?.ToString(_format));
+	}
 }

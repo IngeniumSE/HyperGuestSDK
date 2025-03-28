@@ -31,5 +31,14 @@ public class NullableDecimalJsonConverter : JsonConverter<decimal?>
 	}
 
 	public override void Write(Utf8JsonWriter writer, decimal? value, JsonSerializerOptions options)
-		=> throw new NotSupportedException();
+	{
+		if (value.HasValue)
+		{
+			writer.WriteNumberValue(value.Value);
+		}
+		else
+		{
+			writer.WriteNullValue();
+		}
+	}
 }
