@@ -5,6 +5,7 @@ namespace HyperGuestSDK.Api;
 
 partial interface IHyperGuestApiClient
 {
+	IStaticOperations Static { get; }
 }
 
 partial class HyperGuestApiClient
