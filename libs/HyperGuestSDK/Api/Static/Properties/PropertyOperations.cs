@@ -3,7 +3,9 @@
 
 namespace HyperGuestSDK.Api;
 
-partial interface IHyperGuestApiClient
+using HyperGuestSDK.Static.Properties;
+
+partial interface IStaticOperations
 {
 	/// <summary>
 	/// Gets the property operations.
@@ -11,10 +13,10 @@ partial interface IHyperGuestApiClient
 	IPropertyOperations Properties { get; }
 }
 
-partial class  HyperGuestApiClient
+partial class StaticOperations
 {
 	Lazy<IPropertyOperations>? _properties;
-	public IPropertyOperations Properties => (_properties ??= Defer<IPropertyOperations>(
+	public IPropertyOperations Properties => (_properties ??= _client.Defer<IPropertyOperations>(
 		c => new PropertyOperations(c))).Value;
 }
 
@@ -35,7 +37,10 @@ public partial class PropertyOperations(ApiClient client) : IPropertyOperations
 	public async Task<HyperGuestResponse<Property[]>> GetPropertiesAsync(CancellationToken cancellationToken = default)
 	{
 		var path = new PathString("/hotels.json");
-		var request = new HyperGuestRequest(HttpMethod.Get, path);
+		var request = new HyperGuestRequest(
+			HyperGuestService.StaticData,
+			HttpMethod.Get,
+			path);
 
 		return await client.FetchAsync<Property[]>(request, cancellationToken);
 	}
@@ -45,7 +50,10 @@ public partial class PropertyOperations(ApiClient client) : IPropertyOperations
 		CancellationToken cancellationToken = default)
 	{
 		var path = new PathString($"/{hotelId}/property-static.json");
-		var request = new HyperGuestRequest(HttpMethod.Get, path);
+		var request = new HyperGuestRequest(
+			HyperGuestService.StaticData,
+			HttpMethod.Get,
+			path);
 
 		return await client.FetchAsync<PropertyDetail>(request, cancellationToken);
 	}

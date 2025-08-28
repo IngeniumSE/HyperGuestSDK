@@ -79,6 +79,15 @@ namespace HyperGuestSDK {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The HyperGuest API does not support the service {0}..
+        /// </summary>
+        internal static string ApiClient_UnsupportedService {
+            get {
+                return ResourceManager.GetString("ApiClient_UnsupportedService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The JSON provided does not represent a well-formed error collection..
         /// </summary>
         internal static string ErrorJsonConverter_InvalidJson {
@@ -93,6 +102,15 @@ namespace HyperGuestSDK {
         internal static string PathString_MustStartWithSlash {
             get {
                 return ResourceManager.GetString("PathString_MustStartWithSlash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to At least one URL must be provided when configuring a subscription using the OTA envelope..
+        /// </summary>
+        internal static string Subscription_OTA_MissingUrl {
+            get {
+                return ResourceManager.GetString("Subscription_OTA_MissingUrl", resourceCulture);
             }
         }
     }

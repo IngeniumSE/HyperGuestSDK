@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace HyperGuestSDK.Api;
+namespace HyperGuestSDK.Static.Properties;
 
 /// <summary>
 /// Represents the details of a property.

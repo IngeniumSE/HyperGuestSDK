@@ -123,10 +123,16 @@
   <data name="ApiClient_UnknownResponse" xml:space="preserve">
     <value>An unexpected response was returned from the HyperGuest API, and we could not determine the actual error in this case.</value>
   </data>
+  <data name="ApiClient_UnsupportedService" xml:space="preserve">
+    <value>The HyperGuest API does not support the service {0}.</value>
+  </data>
   <data name="ErrorJsonConverter_InvalidJson" xml:space="preserve">
     <value>The JSON provided does not represent a well-formed error collection.</value>
   </data>
   <data name="PathString_MustStartWithSlash" xml:space="preserve">
     <value>A path string must start with a slash '/'.</value>
+  </data>
+  <data name="Subscription_OTA_MissingUrl" xml:space="preserve">
+    <value>At least one URL must be provided when configuring a subscription using the OTA envelope.</value>
   </data>
 </root>

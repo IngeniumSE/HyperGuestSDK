@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace HyperGuestSDK.Api;
+namespace HyperGuestSDK.Static.Properties;
 
 [DebuggerDisplay("[{HotelId,nq}] {name,nq}, {city,nq}, {country,nq}")]
 public class Property : Model<Property>

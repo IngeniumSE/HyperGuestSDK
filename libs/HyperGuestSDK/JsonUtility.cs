@@ -13,7 +13,11 @@ static class JsonUtility
 		JsonSerializerOptions options = new()
 		{
 			WriteIndented = false,
-			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+			Converters =
+			{
+				new JsonStringEnumConverter()
+			}
 		};
 
 		return options;
@@ -25,7 +29,11 @@ static class JsonUtility
 		{
 			WriteIndented = false,
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-			NumberHandling = JsonNumberHandling.AllowReadingFromString
+			NumberHandling = JsonNumberHandling.AllowReadingFromString,
+			Converters =
+			{
+				new JsonStringEnumConverter()
+			}
 		};
 
 		return options;

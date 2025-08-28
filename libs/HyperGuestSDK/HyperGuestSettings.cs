@@ -20,9 +20,14 @@ public class HyperGuestSettings
 	public string ApiKey { get; set; } = default!;
 
 	/// <summary>
-	/// Gets or sets the API key.
+	/// Gets or sets the PDM base URL.
 	/// </summary>
-	public string BaseUrl { get; set; } = default!;
+	public string PdmBaseUrl { get; set; } = "https://pdm.hyperguest.io";
+
+	/// <summary>
+	/// Gets or sets the static data base URL.
+	/// </summary>
+	public string StaticBaseUrl { get; set; } = "https://hg-static.hyperguest.com";
 
 	/// <summary>
 	/// Gets or sets whether to capture request content.
@@ -60,12 +65,21 @@ public class HyperGuestSettingsValidator : AbstractValidator<HyperGuestSettings>
 		bool ValidateUri(string value)
 			=> Uri.TryCreate(value, UriKind.Absolute, out var _);
 
-		RuleFor(s => s.BaseUrl)
+		RuleFor(s => s.PdmBaseUrl)
 			.Custom((value, context) =>
 			{
 				if (!ValidateUri(value))
 				{
-					context.AddFailure($"'{value}' is not a valid URI.");
+					context.AddFailure($"'{value}' is not a valid PDM URI.");
+				}
+			});
+
+		RuleFor(s => s.StaticBaseUrl)
+			.Custom((value, context) =>
+			{
+				if (!ValidateUri(value))
+				{
+					context.AddFailure($"'{value}' is not a valid Static Data URI.");
 				}
 			});
 

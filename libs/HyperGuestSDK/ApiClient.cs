@@ -20,13 +20,15 @@ public abstract class ApiClient
 	readonly HyperGuestSettings _settings;
 	readonly JsonSerializerOptions _serializerOptions = JsonUtility.CreateSerializerOptions();
 	readonly JsonSerializerOptions _deserializerOptions = JsonUtility.CreateDeserializerOptions();
-	readonly Uri _baseUrl;
+	readonly Uri _staticBaseUrl;
+	readonly Uri _pdmBaseUrl;
 
 	protected ApiClient(HttpClient http, HyperGuestSettings settings)
 	{
 		_http = Ensure.IsNotNull(http, nameof(http));
 		_settings = Ensure.IsNotNull(settings, nameof(settings));
-		_baseUrl = new Uri(_settings.BaseUrl);
+		_staticBaseUrl = new Uri(_settings.StaticBaseUrl);
+		_pdmBaseUrl = new Uri(_settings.PdmBaseUrl);
 	}
 
 	#region Send and Fetch
@@ -234,7 +236,17 @@ public abstract class ApiClient
 		{
 			pathAndQuery += request.Query.Value.ToUriComponent();
 		}
-		var uri = new Uri(_baseUrl, pathAndQuery);
+
+		var baseUri = request.Service switch
+		{
+			HyperGuestService.Pdm => _pdmBaseUrl,
+			HyperGuestService.StaticData => _staticBaseUrl,
+
+			_ => throw new NotSupportedException(
+				string.Format(Resources.ApiClient_UnsupportedService, request.Service)
+			)
+		};
+		var uri = new Uri(baseUri, pathAndQuery);
 
 		var message = new HttpRequestMessage(request.Method, uri);
 
@@ -381,17 +393,24 @@ public abstract class ApiClient
 		else
 		{
 			Error error;
-			if (stringContent is not null)
+			if (stringContent is { Length: >0 })
 			{
-				var result = JsonSerializer.Deserialize<ErrorContainer>(stringContent, _deserializerOptions);
+				try
+				{
+					var result = JsonSerializer.Deserialize<ErrorContainer>(stringContent, _deserializerOptions);
 
-				if (result?.Message is not { Length: > 0 })
-				{
-					error = new(Resources.ApiClient_UnknownResponse, result?.Errors);
+					if (result?.Message is not { Length: > 0 })
+					{
+						error = new(Resources.ApiClient_UnknownResponse, result?.Errors);
+					}
+					else
+					{
+						error = new(result.Message, result.Errors);
+					}
 				}
-				else
+				catch (Exception ex)
 				{
-					error = new(result.Message, result.Errors);
+					error = new Error(ex.Message, exception: ex);
 				}
 			}
 			else
