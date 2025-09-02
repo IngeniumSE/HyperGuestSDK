@@ -128,25 +128,25 @@ public enum SubscriptionStatus
 /// <summary>
 /// Represents a request to create a subscription.
 /// </summary>
-/// <param name="method">The subscription method (ARI vs StaticData)</param>
-/// <param name="propertyIds">The set of property IDs.</param>
-/// <param name="envelopeSubUrls">The set of envelop sub-urls (URLs that are called by the subscription).</param>
-/// <param name="envelope">The envelope type (HyperGuest vs OTA)</param>
-/// <param name="emails">The set of emails used for notification of status changes.</param>
-/// <param name="authentication">Any custom authentication values passed to the sub-urls.</param>
-/// <param name="version">The version of static-data / ARI</param>
-/// <param name="channelMapping">The name of the channel.</param>
+/// <param name="Method">The subscription method (ARI vs StaticData)</param>
+/// <param name="PropertyIds">The set of property IDs.</param>
+/// <param name="EnvelopeSubUrls">The set of envelop sub-urls (URLs that are called by the subscription).</param>
+/// <param name="Envelope">The envelope type (HyperGuest vs OTA)</param>
+/// <param name="Emails">The set of emails used for notification of status changes.</param>
+/// <param name="Authentication">Any custom authentication values passed to the sub-urls.</param>
+/// <param name="Version">The version of static-data / ARI</param>
+/// <param name="ChannelMapping">The name of the channel.</param>
 public record CreateSubscriptionRequest(
-	[property: JsonPropertyName("method")] SubscriptionMethod method,
-	[property: JsonPropertyName("propertyIds")] int[] propertyIds,
-	[property: JsonPropertyName("envelopeSubUrls")] IDictionary<CallbackUrls, string> envelopeSubUrls,
+	[property: JsonPropertyName("method")] SubscriptionMethod Method,
+	[property: JsonPropertyName("propertyIds")] int[] PropertyIds,
+	[property: JsonPropertyName("envelopeSubUrls")] IDictionary<CallbackUrls, string> EnvelopeSubUrls,
 
 	
-	[property: JsonPropertyName("envelope")] SubscriptionEnvelope envelope = SubscriptionEnvelope.HyperGuest,
-	[property: JsonPropertyName("email")] string[]? emails = null,
-	[property: JsonPropertyName("authentication")] IDictionary<string, string>? authentication = null,
-	[property: JsonPropertyName("version")] int version = 1,
-	[property: JsonPropertyName("channelMapping")] string? channelMapping = null
+	[property: JsonPropertyName("envelope")] SubscriptionEnvelope Envelope = SubscriptionEnvelope.HyperGuest,
+	[property: JsonPropertyName("email")] string[]? Emails = null,
+	[property: JsonPropertyName("authentication")] IDictionary<string, string>? Authentication = null,
+	[property: JsonPropertyName("version")] int Version = 1,
+	[property: JsonPropertyName("channelMapping")] string? ChannelMapping = null
 );
 
 /// <summary>
@@ -160,14 +160,14 @@ public record CreateSubscriptionRequest(
 /// <param name="version">The version of static-data / ARI</param>
 /// <param name="channelMapping">The name of the channel.</param>
 public record CreateHyperGuestSubscriptionRequest(
-	SubscriptionMethod method,
-	int[] propertyIds,
-	string callbackUrl,
+	SubscriptionMethod Method,
+	int[] PropertyIds,
+	string CallbackUrl,
 
-	string[]? emails = null,
-	IDictionary<string, string>? authentication = null,
-	int version = 1,
-	string? channelMapping = null)
+	string[]? Emails = null,
+	IDictionary<string, string>? Authentication = null,
+	int Version = 1,
+	string? ChannelMapping = null)
 	: CreateSubscriptionRequest(
 		method,
 		propertyIds,
@@ -190,15 +190,15 @@ public record CreateHyperGuestSubscriptionRequest(
 /// <param name="version">The version of static-data / ARI</param>
 /// <param name="channelMapping">The name of the channel.</param>
 public record CreateOTASubscriptionRequest(
-	SubscriptionMethod method,
-	int[] propertyIds,
-	string? hotelNotificationUrl,
-	string? hotelRateNotificationUrl,
+	SubscriptionMethod Method,
+	int[] PropertyIds,
+	string? HotelNotificationUrl,
+	string? HotelRateNotificationUrl,
 
-	string[]? emails = null,
-	IDictionary<string, string>? authentication = null,
-	int version = 1,
-	string? channelMapping = null)
+	string[]? Emails = null,
+	IDictionary<string, string>? Authentication = null,
+	int Version = 1,
+	string? ChannelMapping = null)
 	: CreateSubscriptionRequest(
 		method,
 		propertyIds,
