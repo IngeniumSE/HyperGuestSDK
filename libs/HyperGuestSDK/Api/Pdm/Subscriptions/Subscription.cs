@@ -169,14 +169,14 @@ public record CreateHyperGuestSubscriptionRequest(
 	int Version = 1,
 	string? ChannelMapping = null)
 	: CreateSubscriptionRequest(
-		method,
-		propertyIds,
-		new Dictionary<CallbackUrls, string> { { CallbackUrls.Callback, callbackUrl } },
+		Method,
+		PropertyIds,
+		new Dictionary<CallbackUrls, string> { { CallbackUrls.Callback, CallbackUrl } },
 		SubscriptionEnvelope.HyperGuest,
-		emails,
-		authentication,
-		version,
-		channelMapping);
+		Emails,
+		Authentication,
+		Version,
+		ChannelMapping);
 
 /// <summary>
 /// Represents a request to create a subscription using the OTA envelope.
@@ -200,14 +200,14 @@ public record CreateOTASubscriptionRequest(
 	int Version = 1,
 	string? ChannelMapping = null)
 	: CreateSubscriptionRequest(
-		method,
-		propertyIds,
-		MapUrls(hotelNotificationUrl, hotelRateNotificationUrl),
+		Method,
+		PropertyIds,
+		MapUrls(HotelNotificationUrl, HotelRateNotificationUrl),
 		SubscriptionEnvelope.HyperGuest,
-		emails,
-		authentication,
-		version,
-		channelMapping)
+		Emails,
+		Authentication,
+		Version,
+		ChannelMapping)
 {
 	static Dictionary<CallbackUrls, string> MapUrls(string? hotelNotificationUrl, string? hotelRateNotificationUrl)
 	{
