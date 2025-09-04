@@ -83,7 +83,7 @@ public partial class SubscriptionOperations(PathString path, ApiClient client) :
 		var request = new HyperGuestRequest<CreateSubscriptionRequest>(
 			HyperGuestService.Pdm,
 			HttpMethod.Post,
-			path + "/subscriptions/subscribe",
+			path + "/subscribe",
 			rq);
 
 		return await client.FetchAsync<CreateSubscriptionRequest, SubscriptionSummary>(request, cancellationToken)
