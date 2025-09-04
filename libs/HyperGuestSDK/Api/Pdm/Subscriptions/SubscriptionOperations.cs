@@ -34,6 +34,14 @@ public partial interface ISubscriptionOperations
 	Task<HyperGuestResponse<SubscriptionSummary>> CreateSubscriptionAsync(CreateSubscriptionRequest request, CancellationToken cancellationToken = default);
 
 	/// <summary>
+	/// Deletes a subscription.
+	/// </summary>
+	/// <param name="request">The subscription request.</param>
+	/// <param name="cancellationToken">The cancellation token.</param>
+	/// <returns>The HyperGuest response.</returns>
+	Task<HyperGuestResponse<SubscriptionSummary>> DeleteSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default);
+
+	/// <summary>
 	/// Disables the given subscription.
 	/// </summary>
 	/// <param name="request">The subscription ID.</param>
@@ -87,6 +95,17 @@ public partial class SubscriptionOperations(PathString path, ApiClient client) :
 			rq);
 
 		return await client.FetchAsync<CreateSubscriptionRequest, SubscriptionSummary>(request, cancellationToken)
+			.ConfigureAwait(false);
+	}
+
+	public async Task<HyperGuestResponse<SubscriptionSummary>> DeleteSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+	{
+		var request = new HyperGuestRequest(
+			HyperGuestService.Pdm,
+			HttpMethod.Get,
+			path + $"/{subscriptionId}/unsubscribe");
+
+		return await client.FetchAsync<SubscriptionSummary>(request, cancellationToken)
 			.ConfigureAwait(false);
 	}
 
