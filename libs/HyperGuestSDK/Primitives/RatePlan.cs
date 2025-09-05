@@ -8,7 +8,7 @@ namespace HyperGuestSDK;
 /// <summary>
 /// Represents a rate plan.
 /// </summary>
-public class RatePlan
+public class RatePlan : Model<RatePlan>
 {
 	/// <summary>
 	/// Gets or sets the base rate plan ID.
