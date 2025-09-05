@@ -32,7 +32,7 @@ public class Subscription
 	/// Gets or sets the status.
 	/// </summary>
 	[JsonPropertyName("status")]
-	public SubscriptionStatus Status { get; set; }
+	public string? StatusValue { get; set; }
 
 	/// <summary>
 	/// Gets or sets the status change comment.
@@ -51,6 +51,29 @@ public class Subscription
 	/// </summary>
 	[JsonPropertyName("version")]
 	public int Version { get; set; }
+
+	#region Presentational
+	/// <summary>
+	/// Gets the status as a <see cref="SubscriptionStatus"/> enum value.
+	/// </summary>
+	public SubscriptionStatus Status
+	{
+		get
+		{
+			if (Enum.TryParse<SubscriptionStatus>(StatusValue, true, out var status))
+			{
+				return status;
+			}
+
+			if (string.Equals("already exists", StatusValue, StringComparison.OrdinalIgnoreCase))
+			{
+				return SubscriptionStatus.Duplicate;
+			}
+
+			return SubscriptionStatus.Unknown;
+		}
+	}
+	#endregion
 }
 
 /// <summary>
@@ -121,7 +144,17 @@ public enum SubscriptionStatus
 	/// <summary>
 	/// The subscription has ended.
 	/// </summary>
-	Unsubscribed
+	Unsubscribed,
+
+	/// <summary>
+	/// The subscription is a duplicate of another subscription.
+	/// </summary>
+	Duplicate,
+
+	/// <summary>
+	/// The subscription status is unknown.
+	/// </summary>
+	Unknown
 }
 
 #region Create Requests
