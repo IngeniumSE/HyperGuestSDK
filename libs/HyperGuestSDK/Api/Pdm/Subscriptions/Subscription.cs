@@ -82,16 +82,39 @@ public class Subscription
 public class SubscriptionSummary
 {
 	/// <summary>
-	/// Gets or sets the status of the subscription.
+	/// Gets or sets the status.
 	/// </summary>
 	[JsonPropertyName("status")]
-	public SubscriptionStatus Status { get; set; }
+	public string? StatusValue { get; set; }
 
 	/// <summary>
 	/// Gets or sets the subscription ID.
 	/// </summary>
 	[JsonPropertyName("subscriptionId")]
 	public required string SubscriptionId { get; set; }
+
+	#region Presentational
+	/// <summary>
+	/// Gets the status as a <see cref="SubscriptionStatus"/> enum value.
+	/// </summary>
+	public SubscriptionStatus Status
+	{
+		get
+		{
+			if (Enum.TryParse<SubscriptionStatus>(StatusValue, true, out var status))
+			{
+				return status;
+			}
+
+			if (string.Equals("already exists", StatusValue, StringComparison.OrdinalIgnoreCase))
+			{
+				return SubscriptionStatus.Duplicate;
+			}
+
+			return SubscriptionStatus.Unknown;
+		}
+	}
+	#endregion
 }
 
 /// <summary>

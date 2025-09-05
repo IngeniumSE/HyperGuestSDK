@@ -136,7 +136,7 @@ public partial class SubscriptionOperations(PathString path, ApiClient client) :
 		var request = new HyperGuestRequest(
 			HyperGuestService.Pdm,
 			HttpMethod.Get,
-			path + $"/{subscriptionId}/getSubscription");
+			path + $"/{subscriptionId}/getSubscriptionDetails");
 
 		return await client.FetchAsync<Subscription>(request, cancellationToken)
 			.ConfigureAwait(false);
