@@ -132,6 +132,7 @@ public enum SubscriptionStatus
 /// <param name="PropertyIds">The set of property IDs.</param>
 /// <param name="EnvelopeSubUrls">The set of envelop sub-urls (URLs that are called by the subscription).</param>
 /// <param name="Envelope">The envelope type (HyperGuest vs OTA)</param>
+/// <param name="RatePlans">The set of rate plans per property ID.</param>
 /// <param name="Emails">The set of emails used for notification of status changes.</param>
 /// <param name="Authentication">Any custom authentication values passed to the sub-urls.</param>
 /// <param name="Version">The version of static-data / ARI</param>
@@ -140,9 +141,8 @@ public record CreateSubscriptionRequest(
 	[property: JsonPropertyName("method")] SubscriptionMethod Method,
 	[property: JsonPropertyName("propertyIds")] int[] PropertyIds,
 	[property: JsonPropertyName("envelopeSubUrls")] IDictionary<CallbackUrls, string> EnvelopeSubUrls,
-
-	
 	[property: JsonPropertyName("envelope")] SubscriptionEnvelope Envelope = SubscriptionEnvelope.HyperGuest,
+	[property: JsonPropertyName("ratePlans")] RatePlanCodeMapping[]? RatePlans = null,
 	[property: JsonPropertyName("email")] string[]? Emails = null,
 	[property: JsonPropertyName("authentication")] IDictionary<string, string>? Authentication = null,
 	[property: JsonPropertyName("version")] int Version = 1,
@@ -164,6 +164,7 @@ public record CreateHyperGuestSubscriptionRequest(
 	int[] PropertyIds,
 	string CallbackUrl,
 
+	RatePlanCodeMapping[]? RatePlans = null,
 	string[]? Emails = null,
 	IDictionary<string, string>? Authentication = null,
 	int Version = 1,
@@ -173,6 +174,7 @@ public record CreateHyperGuestSubscriptionRequest(
 		PropertyIds,
 		new Dictionary<CallbackUrls, string> { { CallbackUrls.Callback, CallbackUrl } },
 		SubscriptionEnvelope.HyperGuest,
+		RatePlans,
 		Emails,
 		Authentication,
 		Version,
@@ -195,6 +197,7 @@ public record CreateOTASubscriptionRequest(
 	string? HotelNotificationUrl,
 	string? HotelRateNotificationUrl,
 
+	RatePlanCodeMapping[]? RatePlans = null,
 	string[]? Emails = null,
 	IDictionary<string, string>? Authentication = null,
 	int Version = 1,
@@ -204,6 +207,7 @@ public record CreateOTASubscriptionRequest(
 		PropertyIds,
 		MapUrls(HotelNotificationUrl, HotelRateNotificationUrl),
 		SubscriptionEnvelope.HyperGuest,
+		RatePlans,
 		Emails,
 		Authentication,
 		Version,
@@ -239,4 +243,8 @@ public enum CallbackUrls
 	OTA_HotelAvailNotifRS,
 	OTA_HotelRateAmountNotifRS
 }
+
+public record RatePlanCodeMapping(
+	[property: JsonPropertyName("propertyId")] int PropertyId,
+	[property: JsonPropertyName("ratePlanCodes")] string[] RatePlanCodes);
 #endregion
