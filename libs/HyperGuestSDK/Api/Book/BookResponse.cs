@@ -40,7 +40,7 @@ public enum BookingStatus
 /// <summary>
 /// Main content of the booking response, including status, dates, payment, prices, rooms, and more.
 /// </summary>
-public class Booking
+public class Booking : Model<Booking>
 {
 	/// <summary>
 	/// The current status of the booking (e.g., confirmed, pending).
