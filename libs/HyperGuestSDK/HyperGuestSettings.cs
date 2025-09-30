@@ -20,6 +20,11 @@ public class HyperGuestSettings
 	public string ApiKey { get; set; } = default!;
 
 	/// <summary>
+	/// Gets or sets the Book base URL.
+	/// </summary>
+	public string BookBaseUrl { get; set; } = "https://book-api.hyperguest.com";
+
+	/// <summary>
 	/// Gets or sets the PDM base URL.
 	/// </summary>
 	public string PdmBaseUrl { get; set; } = "https://pdm.hyperguest.io";

@@ -80,5 +80,11 @@ public enum HyperGuestService
 	/// <summary>
 	/// The PDM service.
 	/// </summary>
-	Pdm
+	Pdm,
+
+
+	/// <summary>
+	/// The Book service.
+	/// </summary>
+	Book
 }

@@ -22,13 +22,16 @@ public abstract class ApiClient
 	readonly JsonSerializerOptions _deserializerOptions = JsonUtility.CreateDeserializerOptions();
 	readonly Uri _staticBaseUrl;
 	readonly Uri _pdmBaseUrl;
+	readonly Uri _bookBaseUrl;
 
 	protected ApiClient(HttpClient http, HyperGuestSettings settings)
 	{
 		_http = Ensure.IsNotNull(http, nameof(http));
 		_settings = Ensure.IsNotNull(settings, nameof(settings));
+
 		_staticBaseUrl = new Uri(_settings.StaticBaseUrl);
 		_pdmBaseUrl = new Uri(_settings.PdmBaseUrl);
+		_bookBaseUrl = new Uri(_settings.BookBaseUrl);
 	}
 
 	#region Send and Fetch
@@ -241,6 +244,7 @@ public abstract class ApiClient
 		{
 			HyperGuestService.Pdm => _pdmBaseUrl,
 			HyperGuestService.StaticData => _staticBaseUrl,
+			HyperGuestService.Book => _bookBaseUrl,
 
 			_ => throw new NotSupportedException(
 				string.Format(Resources.ApiClient_UnsupportedService, request.Service)
