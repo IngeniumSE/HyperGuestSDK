@@ -308,13 +308,13 @@ public abstract class ApiClient
 			{
 				var result = JsonSerializer.Deserialize<ErrorContainer>(stringContent, _deserializerOptions);
 
-				if (result?.Message is not { Length: > 0 })
+				if (result?.Error is not { Length: > 0 })
 				{
-					error = new(Resources.ApiClient_UnknownResponse, result?.Errors);
+					error = new(Resources.ApiClient_UnknownResponse, result?.ToErrorDictionary());
 				}
 				else
 				{
-					error = new(result.Message, result.Errors);
+					error = new(BuildErrorMessage(result!), result?.ToErrorDictionary());
 				}
 			}
 			else
@@ -403,13 +403,13 @@ public abstract class ApiClient
 				{
 					var result = JsonSerializer.Deserialize<ErrorContainer>(stringContent, _deserializerOptions);
 
-					if (result?.Message is not { Length: > 0 })
+					if (result?.Error is not { Length: > 0 })
 					{
-						error = new(Resources.ApiClient_UnknownResponse, result?.Errors);
+						error = new(Resources.ApiClient_UnknownResponse, result?.ToErrorDictionary());
 					}
 					else
 					{
-						error = new(result.Message, result.Errors);
+						error = new(BuildErrorMessage(result!), result?.ToErrorDictionary());
 					}
 				}
 				catch (Exception ex)
@@ -442,6 +442,31 @@ public abstract class ApiClient
 			? new RateLimiting { Limit = limit, Remaining = remaining } : null;
 	}
 
+	string BuildErrorMessage(ErrorContainer container)
+	{
+		var builder = new StringBuilder();
+		if (container.ErrorCode is { Length: > 0 })
+		{
+			builder.Append(container.ErrorCode);
+			builder.Append(": ");
+		}
+
+		if (container.Error is { Length: > 0 })
+		{
+			builder.Append(container.Error);
+			builder.Append("; ");
+		}
+
+		if (container.ErrorDetails is { Length: > 0 })
+		{
+			builder.Append(string.Join("; ", container.ErrorDetails.Select(ed => ed.Message).Where(m => m is { Length: > 0 })));
+		}
+
+		return builder.ToString().TrimEnd(' ', ';', ':') is { Length: > 0 } msg
+			? msg
+			: Resources.ApiClient_UnknownResponse;
+	}
+
 	string? GetHeader(string name, HttpHeaders headers)
 		=> headers.TryGetValues(name, out var values)
 		? values.First()
@@ -449,11 +474,36 @@ public abstract class ApiClient
 
 	class ErrorContainer
 	{
-		[JsonPropertyName("errors")]
-		public Dictionary<string, string[]>? Errors { get; set; }
+		[JsonPropertyName("error")]
+		public string? Error { get; set; }
 
+		[JsonPropertyName("errorCode")]
+		public string? ErrorCode { get; set; }
+
+		[JsonPropertyName("errorDetails")]
+		public ErrorDetails[]? ErrorDetails { get; set; }
+
+		[JsonPropertyName("bookingId")]
+		public int? BookingId { get; set; }
+
+		public Dictionary<string, string[]>? ToErrorDictionary()
+		{
+			if (ErrorDetails is null)
+			{
+				return null;
+			}
+
+			var dict = new Dictionary<string, string[]>();
+			dict.Add(ErrorCode ?? "error", ErrorDetails.Select(ed => ed.Message ?? string.Empty).ToArray());
+
+			return dict;
+		}
+	}
+
+	public class ErrorDetails
+	{
 		[JsonPropertyName("message")]
-		public string Message { get; set; } = default!;
+		public string? Message { get; set; }
 	}
 	#endregion
 
