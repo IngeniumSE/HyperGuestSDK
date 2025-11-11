@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 /// <summary>
 /// A wrapper for the booking response from the HyperGuest API.
 /// </summary>
-public class BookingResponse
+public class BookingResponse : Model<BookingResponse>
 {
 	/// <summary>
 	/// The main content of the booking response.
@@ -162,19 +162,19 @@ public class Payment
 	/// The amount to be charged for the booking.
 	/// </summary>
 	[JsonPropertyName("chargeAmount")]
-	public Chargeamount? ChargeAmount { get; set; }
+	public ChargeAmount? ChargeAmount { get; set; }
 }
 
 /// <summary>
 /// Represents the charge amount and currency for the booking payment.
 /// </summary>
-public class Chargeamount
+public class ChargeAmount
 {
 	/// <summary>
 	/// The price of the booking.
 	/// </summary>
 	[JsonPropertyName("price")]
-	public int? Price { get; set; }
+	public decimal? Price { get; set; }
 
 	/// <summary>
 	/// The currency of the payment.
@@ -228,7 +228,7 @@ public class Net
 	/// The net price amount.
 	/// </summary>
 	[JsonPropertyName("price")]
-	public int? Price { get; set; }
+	public decimal? Price { get; set; }
 
 	/// <summary>
 	/// The currency of the net price.
@@ -252,7 +252,7 @@ public class Sell
 	/// The selling price amount.
 	/// </summary>
 	[JsonPropertyName("price")]
-	public float? Price { get; set; }
+	public decimal? Price { get; set; }
 
 	/// <summary>
 	/// The currency of the selling price.
@@ -276,7 +276,7 @@ public class Commission
 	/// The commission price amount.
 	/// </summary>
 	[JsonPropertyName("price")]
-	public int? Price { get; set; }
+	public decimal? Price { get; set; }
 
 	/// <summary>
 	/// The currency of the commission price.
@@ -294,7 +294,7 @@ public class Bar
 	/// The bar price amount.
 	/// </summary>
 	[JsonPropertyName("price")]
-	public float? Price { get; set; }
+	public decimal? Price { get; set; }
 
 	/// <summary>
 	/// The currency of the bar price.
@@ -318,7 +318,7 @@ public class Fee
 	/// The amount of the fee.
 	/// </summary>
 	[JsonPropertyName("amount")]
-	public float? Amount { get; set; }
+	public decimal? Amount { get; set; }
 
 	/// <summary>
 	/// The currency of the fee amount.
@@ -522,7 +522,7 @@ public class Price
 	/// The amount of money for the price.
 	/// </summary>
 	[JsonPropertyName("amount")]
-	public float? Amount { get; set; }
+	public decimal? Amount { get; set; }
 
 	/// <summary>
 	/// The currency of the price amount.
@@ -570,7 +570,7 @@ public class Value
 	/// The actual value data.
 	/// </summary>
 	[JsonPropertyName("value")]
-	public int? ValueData { get; set; }
+	public decimal? ValueData { get; set; }
 
 	/// <summary>
 	/// The currency of the value, if applicable.
@@ -696,7 +696,7 @@ public class Commission1
 	/// The commission price amount for the night.
 	/// </summary>
 	[JsonPropertyName("price")]
-	public int? Price { get; set; }
+	public decimal? Price { get; set; }
 
 	/// <summary>
 	/// The currency of the commission price for the night.
@@ -888,7 +888,7 @@ public class PriceRoom
 	/// The amount of money for the price.
 	/// </summary>
 	[JsonPropertyName("amount")]
-	public float? Amount { get; set; }
+	public decimal? Amount { get; set; }
 
 	/// <summary>
 	/// The currency of the price amount.
@@ -936,7 +936,7 @@ public class ValueRoom
 	/// The actual value data.
 	/// </summary>
 	[JsonPropertyName("value")]
-	public int? Value { get; set; }
+	public decimal? Value { get; set; }
 
 	/// <summary>
 	/// The currency of the value, if applicable.
@@ -1008,7 +1008,7 @@ public class PriceRoomComment
 	/// The amount of money for the price.
 	/// </summary>
 	[JsonPropertyName("amount")]
-	public float? Amount { get; set; }
+	public decimal? Amount { get; set; }
 
 	/// <summary>
 	/// The currency of the price amount.
@@ -1056,7 +1056,7 @@ public class ValueRoomComment
 	/// The actual value data.
 	/// </summary>
 	[JsonPropertyName("value")]
-	public int? Value { get; set; }
+	public decimal? Value { get; set; }
 }
 
 /// <summary>
@@ -1200,7 +1200,7 @@ public class Tax
 	/// The amount of the tax.
 	/// </summary>
 	[JsonPropertyName("amount")]
-	public float? Amount { get; set; }
+	public decimal? Amount { get; set; }
 
 	/// <summary>
 	/// The currency of the tax amount.
