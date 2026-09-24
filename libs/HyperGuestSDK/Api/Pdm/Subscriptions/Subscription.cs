@@ -88,6 +88,12 @@ public class SubscriptionSummary
 	public string? StatusValue { get; set; }
 
 	/// <summary>
+	/// Gets or sets the status change comment.
+	/// </summary>
+	[JsonPropertyName("statusChangeComment")]
+	public string? StatusChangeComment { get; set; }
+
+	/// <summary>
 	/// Gets or sets the subscription ID.
 	/// </summary>
 	[JsonPropertyName("subscriptionId")]
