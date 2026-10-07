@@ -230,11 +230,11 @@ public class PolicyConditionJsonConverter : JsonConverter<PolicyCondition[]?>
 		using var doc = JsonDocument.ParseValue(ref reader);
 		if (doc.RootElement.ValueKind == JsonValueKind.Object)
 		{
-			return [doc.Deserialize<PolicyCondition>()!];
+			return [doc.Deserialize<PolicyCondition>(options)!];
 		}
 		else if (doc.RootElement.ValueKind == JsonValueKind.Array)
 		{
-			return doc.Deserialize<PolicyCondition[]>();
+			return doc.Deserialize<PolicyCondition[]>(options);
 		}
 
 		return null;
@@ -249,7 +249,7 @@ public class PolicyConditionJsonConverter : JsonConverter<PolicyCondition[]?>
 			for (int i = 0; i < value.Length; i++)
 			{
 				var item = value[i];
-				if (value is null)
+				if (item is null)
 				{
 					writer.WriteNullValue();
 				}
@@ -279,11 +279,11 @@ public class PolicyResultJsonConverter : JsonConverter<PolicyResult[]?>
 		using var doc = JsonDocument.ParseValue(ref reader);
 		if (doc.RootElement.ValueKind == JsonValueKind.Object)
 		{
-			return [doc.Deserialize<PolicyResult>()!];
+			return [doc.Deserialize<PolicyResult>(options)!];
 		}
 		else if (doc.RootElement.ValueKind == JsonValueKind.Array)
 		{
-			return doc.Deserialize<PolicyResult[]>();
+			return doc.Deserialize<PolicyResult[]>(options);
 		}
 
 		return null;
@@ -298,7 +298,7 @@ public class PolicyResultJsonConverter : JsonConverter<PolicyResult[]?>
 			for (int i = 0; i < value.Length; i++)
 			{
 				var item = value[i];
-				if (value is null)
+				if (item is null)
 				{
 					writer.WriteNullValue();
 				}
